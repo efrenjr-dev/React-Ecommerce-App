@@ -2,6 +2,7 @@ import "./App.scss";
 import Container from "react-bootstrap/Container";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 
+import { Toaster } from "react-hot-toast";
 import AppNavBar from "./components/AppNavBar";
 
 // routes
@@ -79,6 +80,12 @@ export default function App() {
 function Root() {
     return (
         <>
+            <Toaster
+                toastOptions={{
+                    // duration: 7000,
+                    reverseOrder: true,
+                }}
+            />
             <AppNavBar />
             <Container>
                 <Outlet />

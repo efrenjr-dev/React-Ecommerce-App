@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import toast from "react-hot-toast";
 
 export default function Register() {
+    const navigate = useNavigate();
+
+    // const [status, setStatus] = useState("typing"); // typing || submitting || success || error
     const [isFilled, setIsFilled] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -28,12 +33,44 @@ export default function Register() {
         }
     }, [firstName, lastName, email, mobileNo, password, confirmPassword]);
 
-    function registerUser(e) {
+    async function registerUser() {
+        const loadingToast = toast.loading("Registering new user details");
+        const response = await fetch(
+            "https://e-commerce-api-2.vercel.app/users/register",
+            {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                    mobileNo: mobileNo,
+                }),
+            }
+        );
+        const data = await response.json();
+        console.log(data);
+        if (data.status) {
+            toast.success(data.message, {
+                id: loadingToast,
+            });
+            navigate("/login");
+            toast("Please log in with user credentials");
+        } else {
+            toast.error(data.message, {
+                id: loadingToast,
+            });
+        }
+    }
+
+    function handleSubmit(e) {
         e.preventDefault();
 
-        console.log(
-            firstName + lastName + email + mobileNo + password + confirmPassword
-        );
+        const data = registerUser();
     }
 
     return (
@@ -43,7 +80,7 @@ export default function Register() {
                     <h1 className="my-5 text-center">Registration Page</h1>
                     <Form
                         onSubmit={(e) => {
-                            registerUser(e);
+                            handleSubmit(e);
                         }}
                     >
                         <Form.Group className="mb-3">
