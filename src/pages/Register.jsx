@@ -35,33 +35,39 @@ export default function Register() {
 
     async function registerUser() {
         const loadingToast = toast.loading("Registering new user details");
-        const response = await fetch(
-            "https://e-commerce-api-2.vercel.app/users/register",
-            {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password,
-                    firstName: firstName,
-                    lastName: lastName,
-                    mobileNo: mobileNo,
-                }),
+        try {
+            const response = await fetch(
+                "https://e-commerce-api-2.vercel.app/users/register",
+                {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                        firstName: firstName,
+                        lastName: lastName,
+                        mobileNo: mobileNo,
+                    }),
+                }
+            );
+            const data = await response.json();
+            console.log(data);
+            if (data.status) {
+                toast.success(data.message, {
+                    id: loadingToast,
+                });
+                navigate("/login");
+                toast("Please log in with user credentials");
+            } else {
+                toast.error(data.message, {
+                    id: loadingToast,
+                });
             }
-        );
-        const data = await response.json();
-        console.log(data);
-        if (data.status) {
-            toast.success(data.message, {
-                id: loadingToast,
-            });
-            navigate("/login");
-            toast("Please log in with user credentials");
-        } else {
-            toast.error(data.message, {
+        } catch (err) {
+            toast.error(err.toString(), {
                 id: loadingToast,
             });
         }
@@ -70,7 +76,13 @@ export default function Register() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        const data = registerUser();
+        if (password !== confirmPassword) {
+            toast.error("Password and Confirm Password fields do not match.");
+        } else if (password.length < 8) {
+            toast.error("Password should be at least 8 characters.");
+        } else {
+            registerUser();
+        }
     }
 
     return (
