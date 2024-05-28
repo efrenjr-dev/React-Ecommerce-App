@@ -81,6 +81,8 @@ export default function AddProduct() {
                                 placeholder="Enter Product Name"
                                 required
                             />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
                             <Form.Label>Product Description:</Form.Label>
                             <Form.Control
                                 type="text"
@@ -91,6 +93,8 @@ export default function AddProduct() {
                                 placeholder="Enter Product Description"
                                 required
                             />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
                             <Form.Label>Price:</Form.Label>
                             <Form.Control
                                 type="number"
