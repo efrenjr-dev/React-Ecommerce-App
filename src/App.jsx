@@ -34,7 +34,7 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: "/product",
+                path: "/product/:productId",
                 element: <ViewProduct />,
             },
             {
@@ -66,11 +66,11 @@ const router = createBrowserRouter([
                 element: <Register />,
             },
             {
-                path: "/updateproduct",
+                path: "/updateproduct/:productId",
                 element: <UpdateProduct />,
             },
             {
-                path: "/order",
+                path: "/order/:orderId",
                 element: <ViewOrder />,
             },
         ],

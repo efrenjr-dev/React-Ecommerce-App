@@ -22,9 +22,6 @@ export default function AppNavBar() {
                                 title="Products"
                                 id="collapsible-nav-dropdown-products"
                             >
-                                <NavDropdown.Item as={Link} to="/product">
-                                    View Product
-                                </NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/products">
                                     View Products
                                 </NavDropdown.Item>

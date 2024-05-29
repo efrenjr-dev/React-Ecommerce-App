@@ -77,9 +77,9 @@ export default function Register() {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            toast.error("Password and Confirm Password fields do not match.");
+            toast.error("Password and Confirm Password fields do not match.",{id:"validator"});
         } else if (password.length < 8) {
-            toast.error("Password should be at least 8 characters.");
+            toast.error("Password should be at least 8 characters.",{id:"validator"});
         } else {
             registerUser();
         }
