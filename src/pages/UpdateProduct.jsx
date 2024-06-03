@@ -116,6 +116,15 @@ export default function UpdateProduct() {
                         }}
                     >
                         <Form.Group className="mb-3">
+                            <Form.Label>Product ID:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder={productId}
+                                required
+                                disabled
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
                             <Form.Label>Product Name:</Form.Label>
                             <Form.Control
                                 type="text"

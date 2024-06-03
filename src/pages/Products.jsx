@@ -34,7 +34,10 @@ export default function Products() {
                                     className="d-flex justify-content-center align-items-stretch"
                                     key={product._id}
                                 >
-                                    <Product productProp={product} />
+                                    <Product
+                                        productProp={product}
+                                        isAdmin={user.isAdmin}
+                                    />
                                 </Col>
                             );
                         })
@@ -71,7 +74,10 @@ export default function Products() {
                                     className="d-flex justify-content-center align-items-stretch"
                                     key={product._id}
                                 >
-                                    <Product productProp={product} />
+                                    <Product
+                                        productProp={product}
+                                        isAdmin={user.isAdmin}
+                                    />
                                 </Col>
                             );
                         })
