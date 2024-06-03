@@ -11,28 +11,50 @@ export default function Cart() {
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        JSON.parse(localStorage.getItem("ecommercecarts")).forEach((item) => {
-            if (item.id === user.id) {
-                setProducts(item.products);
-            }
-        });
+        let cart = localStorage.getItem("ecommercecarts");
+        if (cart) {
+            JSON.parse(cart).forEach((item) => {
+                if (item.id === user.id) {
+                    setProducts(item.products);
+                }
+            });
+        }
     }, [user]);
 
     useEffect(() => {
-        let totalAmount=0;
-        products.forEach(
-            (p) => (totalAmount = totalAmount + p.priceSold * p.quantity)
-        );
-        setTotal(totalAmount);
-        setCartList(
-            <CartList products={products} onChangeQuantity={onChangeQuantity} />
-        );
+        let totalAmount = 0;
+        let cart = localStorage.getItem("ecommercecarts");
+        if(cart&&products.length >0) {
+            cart = JSON.parse(cart).map(item=>{
+                if(item.id===user.id) {
+                    return {...item,products:products}
+                }
+                return item
+            })
+            localStorage.setItem("ecommercecarts",JSON.stringify(cart))
+        }
+        if (products.length > 0) {
+            products.forEach(
+                (p) => (totalAmount = totalAmount + p.priceSold * p.quantity)
+            );
+            setTotal(totalAmount);
+            setCartList(
+                <CartList
+                    products={products}
+                    onChangeQuantity={onChangeQuantity}
+                />
+            );
+        } else {
+            setCartList(<h3 className="text-center">You do not have any items in cart</h3>);
+        }
+
         
     }, [products]);
 
     const handleOrder = async (e) => {
         let loadingToast = toast.loading("Adding order");
         let totalAmount = 0;
+        let localCart = JSON.parse(localStorage.getItem("ecommercecarts"));
         products.forEach(
             (p) => (totalAmount = totalAmount + p.priceSold * p.quantity)
         );
@@ -58,6 +80,14 @@ export default function Cart() {
             toast.success(data.message, {
                 id: loadingToast,
             });
+            // console.log(localCart);
+            localCart = JSON.stringify(
+                localCart.filter((item) => {
+                    return item.id !== user.id;
+                })
+            );
+            // console.log(localCart);
+            localStorage.setItem("ecommercecarts", localCart);
         } catch (err) {
             toast.error(err.toString(), {
                 id: loadingToast,
@@ -109,7 +139,7 @@ export default function Cart() {
                             return { ...p, quantity: 1 };
                         }
                         totalAmount =
-                            totalAmount + (p.priceSold * (p.quantity - 1));
+                            totalAmount + p.priceSold * (p.quantity - 1);
                         return { ...p, quantity: p.quantity - 1 };
                     }
                     totalAmount = totalAmount + p.priceSold * p.quantity;
@@ -126,10 +156,14 @@ export default function Cart() {
         <>
             <h1 className="text-center my-5">Your Cart</h1>
             {cartList}
+            {products.length > 0 && (
+                <>
             <p>Total Amount: {total}</p>
             <Button onClick={handleOrder} className="d-flex ms-auto">
                 Order
             </Button>
+            </>
+            )}
         </>
     );
 }
