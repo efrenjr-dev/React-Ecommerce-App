@@ -58,9 +58,9 @@ export default function Login() {
                 );
                 const userData = await userResponse.json();
                 // console.log(localStorage.getItem("ecommercetoken"));
-                // console.log(userData);
+                console.log(userData);
                 setUser({
-                    id: userData._id,
+                    id: userData.id,
                     isAdmin: userData.isAdmin,
                 });
                 toast.success(`You have been logged in as ${email}`, {

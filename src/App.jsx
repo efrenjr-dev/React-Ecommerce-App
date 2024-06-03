@@ -104,7 +104,7 @@ function Root() {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                setUser({ id: data._id, isAdmin: data.isAdmin });
+                setUser({ id: data.id, isAdmin: data.isAdmin });
             })
             .catch((err) => {
                 console.log(err.toString());

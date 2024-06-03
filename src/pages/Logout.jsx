@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 export default function Logout() {
     const { setUser, unsetUser } = useContext(UserContext);
     const navigate = useNavigate();
-
-    unsetUser();
     toast.success("You have been logged out.", { id: 1 });
+    unsetUser();
 
     useEffect(() => {
         setUser({

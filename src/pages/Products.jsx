@@ -26,7 +26,7 @@ export default function Products() {
                         // console.log(product);
                         return (
                             <Col
-                                className="d-flex flex-column align-items-stretch"
+                                className="d-flex justify-content-center align-items-stretch"
                                 key={product._id}
                             >
                                 <Product productProp={product} />
@@ -52,7 +52,7 @@ export default function Products() {
     ) : (
         <>
             <h1 className="my-5 text-center">Products Page</h1>
-            <Row xs={1} sm={2} lg={4}>
+            <Row xs={1} sm={2} lg={3}>
                 {activeProducts}
             </Row>
         </>

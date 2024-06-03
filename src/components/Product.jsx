@@ -10,7 +10,7 @@ export default function Product({ productProp }) {
         >
             <Card.Img
                 variant="top"
-                src="https://via.placeholder.com/300x200/000000/FFFFFF?text=Image"
+                src="https://via.placeholder.com/300x200/222222/FFFFFF?text=Image"
             />
             <Card.Body>
                 <Card.Title>{productProp.productName}</Card.Title>

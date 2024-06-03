@@ -3,15 +3,18 @@ import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
-
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import Button from "react-bootstrap/esm/Button";
+import { toast } from "react-hot-toast";
+
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../userContext";
+import UpdateProduct from "./UpdateProduct";
 
 export default function ViewProduct() {
+    const navigate = useNavigate();
     const { productId } = useParams();
-
+    const { user } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const [productQuantity, setProductQuantity] = useState(1);
     const [subtotal, setSubtotal] = useState(0);
@@ -70,6 +73,54 @@ export default function ViewProduct() {
 
     const addToCart = (e) => {
         e.preventDefault;
+        toast.success(
+            `${productDetails.productName} has been added to your cart successfully`
+        );
+        setProductQuantity(1);
+        let cartsArray = [];
+        let foundUserIndex = -1;
+        let productItem = {
+            productId: productDetails.id,
+            productName: productDetails.productName,
+            priceSold: productDetails.price,
+            quantity: productQuantity,
+        };
+
+        // console.log(localStorage.getdItem("ecommercecarts"));
+        if (localStorage.getItem("ecommercecarts") !== null) {
+            cartsArray = localStorage.getItem("ecommercecarts");
+            cartsArray = JSON.parse(cartsArray);
+            // console.log(cartsArray);
+        }
+        // console.log(user);
+        foundUserIndex = cartsArray.findIndex((cart) => cart.id === user.id);
+        // console.log(foundUserIndex);
+        if (foundUserIndex >= 0) {
+            // cartsArray[foundUserIndex].products.push(productItem);
+            let foundProduct = false;
+            cartsArray[foundUserIndex].products = cartsArray[
+                foundUserIndex
+            ].products.map((product) => {
+                if (product.productId === productItem.productId) {
+                    product.quantity = product.quantity + productItem.quantity;
+                    foundProduct = true;
+                }
+                return product;
+            });
+            !foundProduct &&
+                cartsArray[foundUserIndex].products.push(productItem);
+        } else {
+            cartsArray.push({
+                id: user.id,
+                products: [productItem],
+            });
+        }
+        localStorage.setItem("ecommercecarts", JSON.stringify(cartsArray));
+    };
+
+    const handleUpdate = (e) => {
+        e.preventDefault;
+        navigate(`/updateproduct/${productId}`);
     };
 
     return isLoading ? (
@@ -83,7 +134,7 @@ export default function ViewProduct() {
     ) : (
         <>
             <Row className="mt-5 justify-content-center align-items-center d-flex">
-                <Col xs={12} sm={6} lg={4}>
+                <Col xs={12} sm={8} lg={6}>
                     {/* <h1 className="my-5 text-center">
                         {productDetails.productName}
                     </h1> */}
@@ -92,7 +143,7 @@ export default function ViewProduct() {
                     <Card className="mb-5 text-link">
                         <Card.Img
                             variant="top"
-                            src="https://via.placeholder.com/300x200/000000/FFFFFF?text=Image"
+                            src="https://via.placeholder.com/600x400/222222/FFFFFF?text=Item"
                         />
                         <Card.Body>
                             <Card.Title>
@@ -104,40 +155,55 @@ export default function ViewProduct() {
                             <Card.Text>
                                 Php {productDetails.price.toFixed(2).toString()}
                             </Card.Text>
-                            <Form>
-                                <Form.Group className="mb-3 flex-row d-flex align-items-center justify-content-center">
-                                    <Form.Label className="me-3">
-                                        Quantity
-                                    </Form.Label>
-                                    <Button
-                                        onClick={(e) =>
-                                            handleProductQuantity(e, "-")
-                                        }
-                                    >
-                                        -
+                            {user.isAdmin === false && (
+                                <Form>
+                                    <Form.Group className="mb-3 flex-row d-flex align-items-center justify-content-center">
+                                        <Form.Label className="me-3">
+                                            Quantity
+                                        </Form.Label>
+                                        <Button
+                                            onClick={(e) =>
+                                                handleProductQuantity(e, "-")
+                                            }
+                                        >
+                                            -
+                                        </Button>
+                                        <Form.Control
+                                            type="number"
+                                            value={productQuantity}
+                                            onChange={(e) =>
+                                                handleProductQuantity(
+                                                    e,
+                                                    "input"
+                                                )
+                                            }
+                                            className="mx-2 number-input"
+                                        />
+                                        <Button
+                                            onClick={(e) =>
+                                                handleProductQuantity(e, "+")
+                                            }
+                                        >
+                                            +
+                                        </Button>
+                                    </Form.Group>
+                                    <Card.Subtitle className="mt-3">
+                                        Subtotal (Php)
+                                    </Card.Subtitle>
+                                    <Card.Text>{subtotal.toFixed(2)}</Card.Text>
+                                    <Button onClick={addToCart}>
+                                        Add to Cart
                                     </Button>
-                                    <Form.Control
-                                        type="number"
-                                        value={productQuantity}
-                                        onChange={(e) =>
-                                            handleProductQuantity(e, "input")
-                                        }
-                                        className="mx-2 number-input"
-                                    />
-                                    <Button
-                                        onClick={(e) =>
-                                            handleProductQuantity(e, "+")
-                                        }
-                                    >
-                                        +
-                                    </Button>
-                                </Form.Group>
-                                <Card.Subtitle className="mt-3">
-                                    Subtotal (Php)
-                                </Card.Subtitle>
-                                <Card.Text>{subtotal.toFixed(2)}</Card.Text>
-                                <Button onClick={addToCart}>Add to Cart</Button>
-                            </Form>
+                                </Form>
+                            )}
+                            {user.isAdmin && (
+                                <Button onClick={handleUpdate}>Update</Button>
+                            )}
+                            {!user.id && (
+                                <Card.Link as={Link} to="/login">
+                                    Sign in and add to cart
+                                </Card.Link>
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>
