@@ -24,14 +24,14 @@ export default function Cart() {
     useEffect(() => {
         let totalAmount = 0;
         let cart = localStorage.getItem("ecommercecarts");
-        if(cart&&products.length >0) {
-            cart = JSON.parse(cart).map(item=>{
-                if(item.id===user.id) {
-                    return {...item,products:products}
+        if (cart && products.length > 0) {
+            cart = JSON.parse(cart).map((item) => {
+                if (item.id === user.id) {
+                    return { ...item, products: products };
                 }
-                return item
-            })
-            localStorage.setItem("ecommercecarts",JSON.stringify(cart))
+                return item;
+            });
+            localStorage.setItem("ecommercecarts", JSON.stringify(cart));
         }
         if (products.length > 0) {
             products.forEach(
@@ -45,10 +45,12 @@ export default function Cart() {
                 />
             );
         } else {
-            setCartList(<h3 className="text-center">You do not have any items in cart</h3>);
+            setCartList(
+                <h3 className="text-center">
+                    You do not have any items in cart
+                </h3>
+            );
         }
-
-        
     }, [products]);
 
     const handleOrder = async (e) => {
@@ -88,6 +90,7 @@ export default function Cart() {
             );
             // console.log(localCart);
             localStorage.setItem("ecommercecarts", localCart);
+            setProducts([]);
         } catch (err) {
             toast.error(err.toString(), {
                 id: loadingToast,
@@ -158,11 +161,11 @@ export default function Cart() {
             {cartList}
             {products.length > 0 && (
                 <>
-            <p>Total Amount: {total}</p>
-            <Button onClick={handleOrder} className="d-flex ms-auto">
-                Order
-            </Button>
-            </>
+                    <p>Total Amount: {total}</p>
+                    <Button onClick={handleOrder} className="d-flex ms-auto">
+                        Order
+                    </Button>
+                </>
             )}
         </>
     );
