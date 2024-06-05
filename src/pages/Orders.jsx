@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Container, Spinner, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function Orders() {
     const [orders, setOrders] = useState([]);
@@ -44,7 +45,13 @@ export default function Orders() {
                                 </td>
                                 <td>{order.orderStatus}</td>
                                 <td>
-                                    <Button className="btn-sm">View</Button>
+                                    <Button
+                                        as={Link}
+                                        to={`/order/${order._id}`}
+                                        className="btn-sm"
+                                    >
+                                        View
+                                    </Button>
                                 </td>
                             </tr>
                         );
@@ -59,19 +66,23 @@ export default function Orders() {
     }, []);
 
     return (
-        <>
+        <Container className="justify-content-center">
             <h1 className="text-center my-5">Orders Page</h1>
-            <Table>
-                <thead>
-                    <tr>
-                        <td>Date Ordered</td>
-                        <td>Total Amount</td>
-                        <td>Order Status</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>{orders}</tbody>
-            </Table>
-        </>
+            {isLoading ? (
+                <Spinner animation="grow" role="status" />
+            ) : (
+                <Table>
+                    <thead>
+                        <tr>
+                            <td>Date Ordered</td>
+                            <td>Total Amount</td>
+                            <td>Order Status</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>{orders}</tbody>
+                </Table>
+            )}
+        </Container>
     );
 }
