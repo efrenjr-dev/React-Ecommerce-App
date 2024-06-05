@@ -22,6 +22,7 @@ export default function Orders() {
             .then((result) => result.json())
             .then((data) => {
                 // console.log(data.length);
+                data.reverse();
                 setOrders(
                     data.map((order) => {
                         // console.log("order");
