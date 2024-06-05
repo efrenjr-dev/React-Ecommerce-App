@@ -22,17 +22,13 @@ export default function Product({ productProp, isAdmin }) {
                     {" "}
                     Php {productProp.price.toFixed(2).toString()}{" "}
                 </Card.Text>
-                {isAdmin &&
-                    (productProp.isActive ? (
-                        <Card.Footer className="text-success">
-                            Active
-                        </Card.Footer>
-                    ) : (
-                        <Card.Footer className="text-warning">
-                            Inactive
-                        </Card.Footer>
-                    ))}
             </Card.Body>
+            {isAdmin &&
+                (productProp.isActive ? (
+                    <Card.Footer className="text-success">Active</Card.Footer>
+                ) : (
+                    <Card.Footer className="text-warning">Inactive</Card.Footer>
+                ))}
         </Card>
     );
 }

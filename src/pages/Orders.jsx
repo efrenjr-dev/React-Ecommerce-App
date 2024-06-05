@@ -26,17 +26,16 @@ export default function Orders() {
                         // console.log("order");
                         let date = new Date(order.dateOrdered);
                         let strDate =
-                            +date.getDate() +
+                            date.getMonth() +
+                            1 +
                             "/" +
-                            (date.getMonth() + 1) +
+                            date.getDate() +
                             "/" +
                             date.getFullYear() +
                             " " +
                             date.getHours() +
                             ":" +
-                            date.getMinutes() +
-                            ":" +
-                            date.getSeconds();
+                            date.getMinutes();
                         return (
                             <tr key={order._id}>
                                 <td>{strDate}</td>
@@ -45,7 +44,7 @@ export default function Orders() {
                                 </td>
                                 <td>{order.orderStatus}</td>
                                 <td>
-                                    <Button>View</Button>
+                                    <Button className="btn-sm">View</Button>
                                 </td>
                             </tr>
                         );

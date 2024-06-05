@@ -81,6 +81,12 @@ export default function UpdateProduct() {
                 toast.success("Product has been updated successfully.", {
                     id: loadingToast,
                 });
+                setInitialDetails({
+                    productName: productName,
+                    description: description,
+                    price: price,
+                    isActive: isActive,
+                });
             } else {
                 toast.error(data.message, {
                     id: loadingToast,
