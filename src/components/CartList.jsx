@@ -10,11 +10,12 @@ export default function CartList({ products, onChangeQuantity }) {
         setCartList(
             products.map((p) => {
                 return (
-                    <Row key={p.productId} className="">
+                    <Row key={p.productId}>
                         <Col xs={3} md={2}>
                             <Image
                                 src="https://via.placeholder.com/100x100/222222/FFFFFF?text=Image"
                                 rounded
+                                fluid
                             ></Image>
                         </Col>
                         <Col className="">

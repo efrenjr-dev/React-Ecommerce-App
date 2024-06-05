@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../userContext";
 import CartList from "../components/CartList";
 import { toast } from "react-hot-toast";
-import { Button } from "react-bootstrap";
+import { Button, Card, Col, Row, Table } from "react-bootstrap";
 
 export default function Cart() {
     const { user } = useContext(UserContext);
@@ -32,24 +32,10 @@ export default function Cart() {
                 return item;
             });
             localStorage.setItem("ecommercecarts", JSON.stringify(cart));
-        }
-        if (products.length > 0) {
             products.forEach(
                 (p) => (totalAmount = totalAmount + p.priceSold * p.quantity)
             );
             setTotal(totalAmount);
-            setCartList(
-                <CartList
-                    products={products}
-                    onChangeQuantity={onChangeQuantity}
-                />
-            );
-        } else {
-            setCartList(
-                <h3 className="text-center">
-                    You do not have any items in cart
-                </h3>
-            );
         }
     }, [products]);
 
@@ -158,14 +144,45 @@ export default function Cart() {
     return (
         <>
             <h1 className="text-center my-5">Your Cart</h1>
-            {cartList}
-            {products.length > 0 && (
-                <>
-                    <p>Total Amount: {total}</p>
-                    <Button onClick={handleOrder} className="d-flex ms-auto">
-                        Order
-                    </Button>
-                </>
+            {products.length > 0 ? (
+                <Row xs={1} md={2}>
+                    <Col md={8}>
+                        <CartList
+                            products={products}
+                            onChangeQuantity={onChangeQuantity}
+                        />
+                    </Col>
+                    <Col md={4} className="justify-content-center">
+                        <Card>
+                            <Card.Body>
+                                <Table>
+                                    <tr>
+                                        <td>Total Amount</td>
+                                        <td className="text-end">
+                                            PHP {total.toFixed(2)}
+                                        </td>
+                                    </tr>
+                                    {/* <tr>
+                                        <td>VAT (12%)</td>
+                                        <td className="text-end">
+                                            {(total * 0.05).toFixed(2)}
+                                        </td>
+                                    </tr> */}
+                                </Table>
+                                <Button
+                                    onClick={handleOrder}
+                                    className="d-flex ms-auto"
+                                >
+                                    Checkout
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            ) : (
+                <h3 className="text-center">
+                    You do not have any items in cart
+                </h3>
             )}
         </>
     );
