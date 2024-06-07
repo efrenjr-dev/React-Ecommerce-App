@@ -20,9 +20,11 @@ export default function ViewOrder() {
                 )}`,
             },
         })
-            .then((result) => result.json())
+            .then((result) => {
+                return result.json();
+            })
             .then((data) => {
-                // console.log(data.products);
+                console.log(data);
                 let date = new Date(data.dateOrdered);
                 let strDate =
                     date.getMonth() +
@@ -56,9 +58,9 @@ export default function ViewOrder() {
             ) : (
                 <Row className="d-flex flex-column align-items-center">
                     <Col>
-                        <h1 className="text-center my-5">View Order Page</h1>
+                        <h1 className="text-center my-5">View Order</h1>
                     </Col>
-                    <Col className="mb-5">
+                    <Col md={10} className="mb-5">
                         <Card>
                             <Card.Body>
                                 <Card.Title>Order Details</Card.Title>
@@ -74,8 +76,7 @@ export default function ViewOrder() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col>
-                        {" "}
+                    <Col md={10}>
                         <OrderList productProp={orderDetails.products} />
                     </Col>
                 </Row>

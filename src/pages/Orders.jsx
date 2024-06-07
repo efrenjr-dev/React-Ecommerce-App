@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
-import { Button, Container, Spinner, Table } from "react-bootstrap";
+import { useContext, useEffect, useState } from "react";
+import { Button, Spinner, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { UserContext } from "../userContext";
 
 export default function Orders() {
+    const { user } = useContext(UserContext);
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setIsLoading(true);
-
-        fetch("https://e-commerce-api-2.vercel.app/users/myOrders/", {
+        let ordersURL = "https://e-commerce-api-2.vercel.app/users/myOrders";
+        user.isAdmin &&
+            (ordersURL = "https://e-commerce-api-2.vercel.app/users/allOrders");
+        console.log(ordersURL);
+        fetch(ordersURL, {
             method: "GET",
             mode: "cors",
             headers: {
@@ -19,9 +24,11 @@ export default function Orders() {
                 )}`,
             },
         })
-            .then((result) => result.json())
+            .then((result) => {
+                return result.json();
+            })
             .then((data) => {
-                // console.log(data.length);
+                // console.log(data);
                 data.reverse();
                 setOrders(
                     data.map((order) => {
@@ -67,8 +74,8 @@ export default function Orders() {
     }, []);
 
     return (
-        <Container className="justify-content-center">
-            <h1 className="text-center my-5">Orders Page</h1>
+        <>
+            <h1 className="text-center my-5">Orders</h1>
             {isLoading ? (
                 <Spinner animation="grow" role="status" />
             ) : (
@@ -84,6 +91,6 @@ export default function Orders() {
                     <tbody>{orders}</tbody>
                 </Table>
             )}
-        </Container>
+        </>
     );
 }

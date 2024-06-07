@@ -64,7 +64,7 @@ export default function AddProduct() {
         <>
             <Row className="justify-content-center">
                 <Col xs md="6">
-                    <h1 className="my-5 text-center">Add Product Page</h1>
+                    <h1 className="my-5 text-center">Add Product</h1>
                     <Form
                         onSubmit={(e) => {
                             handleSubmit(e);

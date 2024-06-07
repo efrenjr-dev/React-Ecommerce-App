@@ -5,7 +5,7 @@ import Row from "react-bootstrap/esm/Row";
 import Form from "react-bootstrap/Form";
 import { toast } from "react-hot-toast";
 import { UserContext } from "../userContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
     const { setUser } = useContext(UserContext);
@@ -58,7 +58,7 @@ export default function Login() {
                 );
                 const userData = await userResponse.json();
                 // console.log(localStorage.getItem("ecommercetoken"));
-                console.log(userData);
+                // console.log(userData);
                 setUser({
                     id: userData.id,
                     isAdmin: userData.isAdmin,
@@ -83,7 +83,7 @@ export default function Login() {
 
     return (
         <>
-            <Row className="justify-content-center">
+            <Row className="d-flex flex-column align-items-center">
                 <Col xs md="6">
                     <h1 className="my-5 text-center">Login Page</h1>
                     <Form
@@ -119,6 +119,11 @@ export default function Login() {
                             Submit
                         </Button>
                     </Form>
+                </Col>
+                <Col className="text-center my-3">
+                    <Link to={"/register"}>
+                        Do not have an account? Sign up
+                    </Link>
                 </Col>
             </Row>
         </>

@@ -35,7 +35,7 @@ export default function UpdateProduct() {
         fetch(`https://e-commerce-api-2.vercel.app/products/${productId}`)
             .then((result) => result.json())
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 setInitialDetails({
                     productName: data.productName,
                     description: data.description,

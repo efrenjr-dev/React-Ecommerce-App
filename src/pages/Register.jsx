@@ -77,9 +77,13 @@ export default function Register() {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            toast.error("Password and Confirm Password fields do not match.",{id:"validator"});
+            toast.error("Password and Confirm Password fields do not match.", {
+                id: "validator",
+            });
         } else if (password.length < 8) {
-            toast.error("Password should be at least 8 characters.",{id:"validator"});
+            toast.error("Password should be at least 8 characters.", {
+                id: "validator",
+            });
         } else {
             registerUser();
         }
@@ -89,7 +93,7 @@ export default function Register() {
         <>
             <Row className="justify-content-center">
                 <Col xs md="6">
-                    <h1 className="my-5 text-center">Registration Page</h1>
+                    <h1 className="my-5 text-center">Registration</h1>
                     <Form
                         onSubmit={(e) => {
                             handleSubmit(e);
