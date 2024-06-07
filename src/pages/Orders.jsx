@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Spinner, Table } from "react-bootstrap";
+import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserContext } from "../userContext";
 
@@ -75,22 +75,32 @@ export default function Orders() {
 
     return (
         <>
-            <h1 className="text-center my-5">Orders</h1>
-            {isLoading ? (
-                <Spinner animation="grow" role="status" />
-            ) : (
-                <Table>
-                    <thead>
-                        <tr>
-                            <td>Date Ordered</td>
-                            <td>Total Amount</td>
-                            <td>Order Status</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>{orders}</tbody>
-                </Table>
-            )}
+            <Row className="d-flex flex-column justify-content-center">
+                <Col>
+                    <h1 className="text-center my-5">Orders</h1>
+                </Col>
+                <Col>
+                    {isLoading ? (
+                        <Spinner animation="grow" role="status" />
+                    ) : orders.length < 1 ? (
+                        <h5 className="text-center">
+                            You do not have any orders.
+                        </h5>
+                    ) : (
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <td>Date Ordered</td>
+                                    <td>Total Amount</td>
+                                    <td>Order Status</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>{orders.length > 0 && orders}</tbody>
+                        </Table>
+                    )}
+                </Col>
+            </Row>
         </>
     );
 }

@@ -180,9 +180,9 @@ export default function Cart() {
                     </Col>
                 </Row>
             ) : (
-                <h3 className="text-center">
-                    You do not have any items in cart
-                </h3>
+                <h5 className="text-center">
+                    Your cart is empty.
+                </h5>
             )}
         </>
     );
