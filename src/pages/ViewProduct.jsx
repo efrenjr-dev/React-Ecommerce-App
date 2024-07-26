@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../userContext";
-import UpdateProduct from "./UpdateProduct";
+
 
 export default function ViewProduct() {
     const navigate = useNavigate();
