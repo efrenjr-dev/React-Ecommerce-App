@@ -72,7 +72,7 @@ export default function CartList({ products, onChangeQuantity }) {
                                     </Form>
                                     <Card.Text>
                                         {" "}
-                                        Php {p.priceSold
+                                        PHP {p.priceSold
                                             .toFixed(2)
                                             .toString()}{" "}
                                     </Card.Text>
