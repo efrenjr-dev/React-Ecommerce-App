@@ -10,7 +10,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../userContext";
 
-
 export default function ViewProduct() {
     const navigate = useNavigate();
     const { productId } = useParams();
@@ -28,7 +27,7 @@ export default function ViewProduct() {
     useEffect(() => {
         // console.log(productId);
         setIsLoading(true);
-        fetch(`https://e-commerce-api-2.vercel.app/products/${productId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`)
             .then((result) => result.json())
             .then((data) => {
                 setIsProductDetails({

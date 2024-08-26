@@ -27,7 +27,7 @@ export default function Login() {
         const loadingToast = toast.loading("Logging in");
         try {
             const loginResponse = await fetch(
-                "https://e-commerce-api-2.vercel.app/users/login",
+                `${process.env.REACT_APP_API_URL}/users/login`,
                 {
                     method: "POST",
                     mode: "cors",
@@ -45,7 +45,7 @@ export default function Login() {
             if (data.accessToken) {
                 localStorage.setItem("ecommercetoken", data.accessToken);
                 const userResponse = await fetch(
-                    "https://e-commerce-api-2.vercel.app/users",
+                    `${process.env.REACT_APP_API_URL}/users`,
                     {
                         method: "GET",
                         mode: "cors",

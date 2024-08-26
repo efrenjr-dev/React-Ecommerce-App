@@ -78,6 +78,7 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+    console.log("API URL", process.env.REACT_APP_API_URL);
     return <RouterProvider router={router} />;
 }
 
@@ -92,7 +93,7 @@ function Root() {
     };
 
     useEffect(() => {
-        fetch("https://e-commerce-api-2.vercel.app/users", {
+        fetch(`${process.env.REACT_APP_API_URL}/users`, {
             method: "GET",
             mode: "cors",
             headers: {

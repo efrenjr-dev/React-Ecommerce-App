@@ -50,7 +50,7 @@ export default function Cart() {
         // console.log(order);
         try {
             const response = await fetch(
-                "https://e-commerce-api-2.vercel.app/users/createOrder",
+                `${process.env.REACT_APP_API_URL}/users/createOrder`,
                 {
                     method: "PUT",
                     mode: "cors",
@@ -180,9 +180,7 @@ export default function Cart() {
                     </Col>
                 </Row>
             ) : (
-                <h5 className="text-center">
-                    Your cart is empty.
-                </h5>
+                <h5 className="text-center">Your cart is empty.</h5>
             )}
         </>
     );

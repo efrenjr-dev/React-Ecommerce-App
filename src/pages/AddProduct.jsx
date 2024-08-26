@@ -28,7 +28,7 @@ export default function AddProduct() {
         try {
             console.log(productName, description, price);
             const productResponse = await fetch(
-                "https://e-commerce-api-2.vercel.app/products/",
+                `${process.env.REACT_APP_API_URL}/products/`,
                 {
                     method: "POST",
                     mode: "cors",

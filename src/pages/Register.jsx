@@ -37,7 +37,7 @@ export default function Register() {
         const loadingToast = toast.loading("Registering new user details");
         try {
             const response = await fetch(
-                "https://e-commerce-api-2.vercel.app/users/register",
+                `${process.env.REACT_APP_API_URL}/users/register`,
                 {
                     method: "POST",
                     mode: "cors",

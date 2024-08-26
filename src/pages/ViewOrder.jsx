@@ -10,7 +10,7 @@ export default function ViewOrder() {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(`https://e-commerce-api-2.vercel.app/users/order/${orderId}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/users/order/${orderId}`, {
             method: "GET",
             mode: "cors",
             headers: {

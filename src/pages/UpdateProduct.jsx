@@ -32,7 +32,7 @@ export default function UpdateProduct() {
     useEffect(() => {
         // console.log(productId);
         setIsLoading(true);
-        fetch(`https://e-commerce-api-2.vercel.app/products/${productId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`)
             .then((result) => result.json())
             .then((data) => {
                 // console.log(data);
@@ -57,7 +57,7 @@ export default function UpdateProduct() {
         try {
             console.log(productName, description, price, isActive);
             const response = await fetch(
-                `https://e-commerce-api-2.vercel.app/products/${productId}`,
+                `${process.env.REACT_APP_API_URL}/products/${productId}`,
                 {
                     method: "PUT",
                     mode: "cors",

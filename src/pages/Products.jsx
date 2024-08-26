@@ -13,7 +13,7 @@ export default function Products() {
     useEffect(() => {
         if (!user.isAdmin) {
             setIsLoading(true);
-            fetch("https://e-commerce-api-2.vercel.app/products/", {
+            fetch(`${process.env.REACT_APP_API_URL}/products/`, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -53,7 +53,7 @@ export default function Products() {
     useEffect(() => {
         if (user.isAdmin) {
             setIsLoading(true);
-            fetch("https://e-commerce-api-2.vercel.app/products/all", {
+            fetch(`${process.env.REACT_APP_API_URL}/products/all`, {
                 method: "GET",
                 mode: "cors",
                 headers: {

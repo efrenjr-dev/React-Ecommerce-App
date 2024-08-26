@@ -10,9 +10,9 @@ export default function Orders() {
 
     useEffect(() => {
         setIsLoading(true);
-        let ordersURL = "https://e-commerce-api-2.vercel.app/users/myOrders";
+        let ordersURL = `${process.env.REACT_APP_API_URL}/users/myOrders`;
         user.isAdmin &&
-            (ordersURL = "https://e-commerce-api-2.vercel.app/users/allOrders");
+            (ordersURL = `${process.env.REACT_APP_API_URL}/users/allOrders`);
         console.log(ordersURL);
         fetch(ordersURL, {
             method: "GET",
