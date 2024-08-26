@@ -5,7 +5,7 @@ import { UserContext } from "./userContext";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import AppNavBar from "./components/AppNavBar";
 
 // routes
